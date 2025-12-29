@@ -21,7 +21,7 @@ extends CharacterBody3D
 ## Normal speed.
 @export var base_speed : float = 5.0
 ## Speed of jump.
-@export var jump_velocity : float = 4.5
+@export var jump_velocity : float = 5
 ## How fast do we run?
 @export var sprint_speed : float = 10.0
 ## How fast do we freefly?
@@ -29,8 +29,16 @@ extends CharacterBody3D
 
 var mouse_captured : bool = false
 var look_rotation : Vector2
-var move_speed : float = 0.0
-var freeflying : bool = false
+var move_speed : float :
+	get:
+		if is_freeflying:
+			return freefly_speed;
+		elif is_sprinting:
+			return sprint_speed;
+		else:
+			return base_speed;
+var is_sprinting : bool = false
+var is_freeflying : bool = false
 
 ## IMPORTANT REFERENCES
 @onready var head: Node3D = $Head
@@ -54,14 +62,14 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	# Toggle freefly mode
 	if can_freefly and Input.is_action_just_pressed("freefly"):
-		if not freeflying:
+		if not is_freeflying:
 			enable_freefly()
 		else:
 			disable_freefly()
 
 func _physics_process(delta: float) -> void:
 	# If freeflying, handle freefly and nothing else
-	if can_freefly and freeflying:
+	if can_freefly and is_freeflying:
 		var input_dir := Input.get_vector("left", "right", "forward", "backward")
 		var motion := (head.global_basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 		motion *= freefly_speed * delta
@@ -82,33 +90,28 @@ func _physics_process(delta: float) -> void:
 			velocity.y = jump_velocity
 
 	# Modify speed based on sprinting
-	var sprinting: bool;
 	if can_sprint and Input.is_action_pressed("sprint"):
 		move_speed = sprint_speed
-		sprinting = true;
+		is_sprinting = true;
 	else:
 		move_speed = base_speed
-		sprinting = false;
+		is_sprinting = false;
 
 	# Apply desired movement to velocity
+	velocity.x = move_toward(velocity.x, 0, move_speed)
+	velocity.z = move_toward(velocity.z, 0, move_speed)
 	if can_move:
 		var input_dir := Input.get_vector("left", "right", "forward", "backward")
 		var move_dir := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 		if move_dir:
 			velocity.x = move_dir.x * move_speed
 			velocity.z = move_dir.z * move_speed
-		else:
-			velocity.x = move_toward(velocity.x, 0, move_speed)
-			velocity.z = move_toward(velocity.z, 0, move_speed)
-	else:
-		velocity.x = 0
-		velocity.y = 0
 	
 	if not is_on_floor():
 		animation.play("jump/Root|Jump");
 	elif velocity.x or velocity.y:
 		var wasnt_playing = animation.current_animation != "run/Root|Run"; # whats bad code?
-		animation.play("run/Root|Run", -1, lerp(0.5, 1.0, sprinting));
+		animation.play("run/Root|Run", -1, lerp(0.5, 1.0, is_sprinting));
 		if wasnt_playing:
 			animation.seek((randi() % 2) * animation.current_animation_length / 2, true);
 	else:
@@ -116,6 +119,7 @@ func _physics_process(delta: float) -> void:
 	
 	# Use velocity to actually move
 	move_and_slide()
+	rotate_look(Vector2.ZERO);
 
 
 ## Rotate us to look around.
@@ -134,12 +138,12 @@ func rotate_look(rot_input : Vector2):
 
 func enable_freefly():
 	collider.disabled = true
-	freeflying = true
+	is_freeflying = true
 	velocity = Vector3.ZERO
 
 func disable_freefly():
 	collider.disabled = false
-	freeflying = false
+	is_freeflying = false
 
 
 func capture_mouse():
@@ -153,12 +157,27 @@ func release_mouse():
 
 func _on_enemy_detected(body: Node3D) -> void:
 	print(body);
-	if body is Enemy:
-		tackle(body);
+	#if body is Enemy:
+		#tackle(body);
 
 func tackle(body: Enemy) -> void:
 	body.can_move = false;
 	body.can_jump = false;
 	body.has_gravity = false;
 	
+func _on_clumsy_body_entered(body: Node3D) -> void:
+	if not is_sprinting:
+		return;
 	
+	var air_bonus = 1;
+	if not is_on_floor():
+		air_bonus = 1.5;
+	
+	var d = body.global_position - global_position;
+	d.y = 0;
+	d = d.normalized();
+	if body is RigidBody3D:
+		body.apply_impulse((d * 5 + Vector3.UP * 0.5) * air_bonus);
+	if body is Enemy:
+		body.velocity += (d.normalized() * 15 + Vector3.UP * 5) * air_bonus;
+		body.can_move = false;
