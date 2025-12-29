@@ -1,0 +1,27 @@
+[gd_scene load_steps=7 format=3 uid="uid://ctel7t5vxrtl2"]
+
+[ext_resource type="PackedScene" uid="uid://cwmegx0ev7i07" path="res://player-model/Model/characterMedium.fbx" id="1_b7koy"]
+[ext_resource type="Script" uid="uid://bkwynsj4nd4rc" path="res://script/enemy.gd" id="1_yvcfn"]
+[ext_resource type="AnimationLibrary" uid="uid://3hm2xpl873p6" path="res://player-model/Animations/idle.fbx" id="2_yvcfn"]
+[ext_resource type="AnimationLibrary" uid="uid://bgccjgjesalpu" path="res://player-model/Animations/jump.fbx" id="3_ulb22"]
+[ext_resource type="AnimationLibrary" uid="uid://drpf00sq18ru8" path="res://player-model/Animations/run.fbx" id="4_1e552"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yvcfn"]
+height = 3.6
+
+[node name="Enemy" type="CharacterBody3D"]
+script = ExtResource("1_yvcfn")
+
+[node name="characterMedium" parent="." instance=ExtResource("1_b7koy")]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 0.125)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="characterMedium"]
+libraries = {
+&"idle": ExtResource("2_yvcfn"),
+&"jump": ExtResource("3_ulb22"),
+&"run": ExtResource("4_1e552")
+}
+
+[node name="Collider" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+shape = SubResource("CapsuleShape3D_yvcfn")

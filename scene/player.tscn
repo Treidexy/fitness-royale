@@ -1,0 +1,48 @@
+[gd_scene load_steps=9 format=3 uid="uid://bs72ogkvdd7d6"]
+
+[ext_resource type="Script" uid="uid://bk7qfbf4uo8c0" path="res://script/player.gd" id="1_ucva2"]
+[ext_resource type="PackedScene" uid="uid://cwmegx0ev7i07" path="res://player-model/Model/characterMedium.fbx" id="2_wr06p"]
+[ext_resource type="AnimationLibrary" uid="uid://3hm2xpl873p6" path="res://player-model/Animations/idle.fbx" id="3_5hfox"]
+[ext_resource type="AnimationLibrary" uid="uid://bgccjgjesalpu" path="res://player-model/Animations/jump.fbx" id="4_0rk7u"]
+[ext_resource type="AnimationLibrary" uid="uid://drpf00sq18ru8" path="res://player-model/Animations/run.fbx" id="5_h60nn"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iof21"]
+albedo_color = Color(0.91806, 0.575202, 0.222449, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ucva2"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s4jxa"]
+height = 3.6
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_ucva2")
+
+[node name="characterMedium" parent="." instance=ExtResource("2_wr06p")]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 0.125)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="characterMedium"]
+libraries = {
+&"idle": ExtResource("3_5hfox"),
+&"jump": ExtResource("4_0rk7u"),
+&"run": ExtResource("5_h60nn")
+}
+autoplay = "idle/Root|Idle"
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+visible = false
+material_override = SubResource("StandardMaterial3D_iof21")
+cast_shadow = 0
+mesh = SubResource("CapsuleMesh_ucva2")
+
+[node name="Collider" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+shape = SubResource("CapsuleShape3D_s4jxa")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 0.911044, 0.412309, 0, -0.412309, 0.911044, 0, 1.17086, 1.99623)
