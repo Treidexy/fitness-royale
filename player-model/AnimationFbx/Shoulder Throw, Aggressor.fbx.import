@@ -1,15 +1,15 @@
 [remap]
 
-importer="scene"
+importer="animation_library"
 importer_version=1
-type="PackedScene"
-uid="uid://crc2mdcdj8myu"
-path="res://.godot/imported/characterMedium.fbx-9c1ca55c11db4a23553c76397af6db6b.scn"
+type="AnimationLibrary"
+uid="uid://cd5pp0b20h7f0"
+path="res://.godot/imported/Shoulder Throw, Aggressor.fbx-d7aa3033c649eaa4c00bab6907b7db66.res"
 
 [deps]
 
-source_file="res://player-model/Model/characterMedium.fbx"
-dest_files=["res://.godot/imported/characterMedium.fbx-9c1ca55c11db4a23553c76397af6db6b.scn"]
+source_file="res://player-model/AnimationFbx/Shoulder Throw, Aggressor.fbx"
+dest_files=["res://.godot/imported/Shoulder Throw, Aggressor.fbx-d7aa3033c649eaa4c00bab6907b7db66.res"]
 
 [params]
 

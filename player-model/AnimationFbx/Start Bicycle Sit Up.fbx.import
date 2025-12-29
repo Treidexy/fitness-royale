@@ -1,15 +1,15 @@
 [remap]
 
-importer="scene"
+importer="animation_library"
 importer_version=1
-type="PackedScene"
-uid="uid://crc2mdcdj8myu"
-path="res://.godot/imported/characterMedium.fbx-9c1ca55c11db4a23553c76397af6db6b.scn"
+type="AnimationLibrary"
+uid="uid://bnpu87towm7xf"
+path="res://.godot/imported/Start Bicycle Sit Up.fbx-d5c031c485cd55d803fd98be5d9df6de.res"
 
 [deps]
 
-source_file="res://player-model/Model/characterMedium.fbx"
-dest_files=["res://.godot/imported/characterMedium.fbx-9c1ca55c11db4a23553c76397af6db6b.scn"]
+source_file="res://player-model/AnimationFbx/Start Bicycle Sit Up.fbx"
+dest_files=["res://.godot/imported/Start Bicycle Sit Up.fbx-d5c031c485cd55d803fd98be5d9df6de.res"]
 
 [params]
 

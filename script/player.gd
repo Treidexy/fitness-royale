@@ -4,18 +4,6 @@
 class_name Player
 extends CharacterBody3D
 
-## Can we move around?
-@export var can_move : bool = true
-## Are we affected by gravity?
-@export var has_gravity : bool = true
-## Can we press to jump?
-@export var can_jump : bool = true
-## Can we hold to run?
-@export var can_sprint : bool = true
-## Can we press to enter freefly mode (noclip)?
-@export var can_freefly : bool = false
-
-@export_group("Speeds")
 ## Look around rotation speed.
 @export var look_speed : float = 0.005
 ## Normal speed.
@@ -44,6 +32,7 @@ var is_freeflying : bool = false
 @onready var head: Node3D = $Head
 @onready var collider: CollisionShape3D = $Collider
 @onready var animation: AnimationPlayer = $characterMedium/AnimationPlayer
+@onready var playback: AnimationNodeStateMachinePlayback = $AnimationTree.get("parameters/playback");
 
 func _ready() -> void:
 	look_rotation.y = rotation.y
@@ -61,15 +50,19 @@ func _unhandled_input(event: InputEvent) -> void:
 		rotate_look(event.relative)
 	
 	# Toggle freefly mode
-	if can_freefly and Input.is_action_just_pressed("freefly"):
+	if Input.is_action_just_pressed("freefly"):
 		if not is_freeflying:
 			enable_freefly()
 		else:
 			disable_freefly()
 
 func _physics_process(delta: float) -> void:
+	if Input.is_action_just_pressed("dance"):
+		print('he')
+		playback.travel("Dance");
+	
 	# If freeflying, handle freefly and nothing else
-	if can_freefly and is_freeflying:
+	if is_freeflying:
 		var input_dir := Input.get_vector("left", "right", "forward", "backward")
 		var motion := (head.global_basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 		motion *= freefly_speed * delta
@@ -77,20 +70,18 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	# Apply gravity to velocity
-	if has_gravity:
-		if not is_on_floor():
-			velocity += get_gravity() * delta
-			animation.play("jump/Root|Jump");
-			move_and_slide();
-			return;
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+		playback.travel("Air");
+		move_and_slide();
+		return;
 
-	# Apply jumping
-	if can_jump:
-		if Input.is_action_just_pressed("jump") and is_on_floor():
+	if Input.is_action_just_pressed("jump") and is_on_floor():
+		if playback.get_current_node() == "Run" and not playback.get_fading_from_node():
 			velocity.y = jump_velocity
 
-	# Modify speed based on sprinting
-	if can_sprint and Input.is_action_pressed("sprint"):
+	
+	if Input.is_action_pressed("sprint"):
 		move_speed = sprint_speed
 		is_sprinting = true;
 	else:
@@ -100,22 +91,16 @@ func _physics_process(delta: float) -> void:
 	# Apply desired movement to velocity
 	velocity.x = move_toward(velocity.x, 0, move_speed)
 	velocity.z = move_toward(velocity.z, 0, move_speed)
-	if can_move:
-		var input_dir := Input.get_vector("left", "right", "forward", "backward")
-		var move_dir := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-		if move_dir:
-			velocity.x = move_dir.x * move_speed
-			velocity.z = move_dir.z * move_speed
-	
-	if not is_on_floor():
-		animation.play("jump/Root|Jump");
-	elif velocity.x or velocity.y:
-		var wasnt_playing = animation.current_animation != "run/Root|Run"; # whats bad code?
-		animation.play("run/Root|Run", -1, lerp(0.5, 1.0, is_sprinting));
-		if wasnt_playing:
-			animation.seek((randi() % 2) * animation.current_animation_length / 2, true);
+	var move_dir := (transform.basis * Vector3.FORWARD * Input.get_action_strength("forward")).normalized()
+	if move_dir:
+		velocity.x = move_dir.x * move_speed
+		velocity.z = move_dir.z * move_speed
+		if is_sprinting:
+			playback.travel("Run");
+		else:
+			playback.travel("Walk");
 	else:
-		animation.play("idle/Root|Idle");
+		playback.travel("Idle");
 	
 	# Use velocity to actually move
 	move_and_slide()

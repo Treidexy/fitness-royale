@@ -1,15 +1,15 @@
 [remap]
 
-importer="scene"
+importer="animation_library"
 importer_version=1
-type="PackedScene"
-uid="uid://crc2mdcdj8myu"
-path="res://.godot/imported/characterMedium.fbx-9c1ca55c11db4a23553c76397af6db6b.scn"
+type="AnimationLibrary"
+uid="uid://5r0m4iewpg8r"
+path="res://.godot/imported/Kettlebell Swing.fbx-457f8c6656d74297a148b2a073269204.res"
 
 [deps]
 
-source_file="res://player-model/Model/characterMedium.fbx"
-dest_files=["res://.godot/imported/characterMedium.fbx-9c1ca55c11db4a23553c76397af6db6b.scn"]
+source_file="res://player-model/AnimationFbx/Kettlebell Swing.fbx"
+dest_files=["res://.godot/imported/Kettlebell Swing.fbx-457f8c6656d74297a148b2a073269204.res"]
 
 [params]
 

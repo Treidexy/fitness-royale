@@ -1,10 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://ci6qhmidpta3y"]
+[gd_scene load_steps=6 format=3 uid="uid://ci6qhmidpta3y"]
 
 [ext_resource type="Script" uid="uid://jh7iw0kjpsd3" path="res://script/game_context.gd" id="1_0ha60"]
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://scene/player.tscn" id="1_wp4xf"]
 [ext_resource type="PackedScene" uid="uid://c6bv5hl7duxpl" path="res://gym-stuff/blend/bench.blend" id="2_brvut"]
 [ext_resource type="PackedScene" uid="uid://bcwp0fr0bupow" path="res://gym-stuff/blend/dummy.blend" id="3_0ha60"]
-[ext_resource type="PackedScene" uid="uid://ctel7t5vxrtl2" path="res://scene/enemy.tscn" id="4_brvut"]
 [ext_resource type="PackedScene" uid="uid://8c54nwtytc6m" path="res://gym-stuff/blend/rack.blend" id="6_4j5ol"]
 
 [node name="Node3D" type="Node3D"]
@@ -22,16 +21,12 @@ use_collision = true
 size = Vector3(50, 2, 50)
 
 [node name="Player" parent="." instance=ExtResource("1_wp4xf")]
-can_freefly = true
 
 [node name="bench" parent="." instance=ExtResource("2_brvut")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -4)
 
 [node name="dummy" parent="." instance=ExtResource("3_0ha60")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 4)
-
-[node name="Enemy" parent="." instance=ExtResource("4_brvut")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.19275, 0, -6.44853)
 
 [node name="rack" parent="." instance=ExtResource("6_4j5ol")]
 transform = Transform3D(-0.574834, 0, 0.81827, 0, 1, 0, -0.81827, 0, -0.574834, 4.20962, 0.00399268, 5.73564)

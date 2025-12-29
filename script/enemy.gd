@@ -57,7 +57,7 @@ func _physics_process(delta: float) -> void:
 	if has_gravity:
 		if not is_on_floor():
 			velocity += get_gravity() * delta
-			animation.play("jump/Root|Jump");
+			#animation.play("");
 			move_and_slide();
 			return;
 	

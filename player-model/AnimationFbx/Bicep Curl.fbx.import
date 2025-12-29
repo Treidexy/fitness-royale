@@ -1,15 +1,15 @@
 [remap]
 
-importer="scene"
+importer="animation_library"
 importer_version=1
-type="PackedScene"
-uid="uid://crc2mdcdj8myu"
-path="res://.godot/imported/characterMedium.fbx-9c1ca55c11db4a23553c76397af6db6b.scn"
+type="AnimationLibrary"
+uid="uid://bounoy7qmj4hf"
+path="res://.godot/imported/Bicep Curl.fbx-4f45d67ea2dd112d7a9b470779389e32.res"
 
 [deps]
 
-source_file="res://player-model/Model/characterMedium.fbx"
-dest_files=["res://.godot/imported/characterMedium.fbx-9c1ca55c11db4a23553c76397af6db6b.scn"]
+source_file="res://player-model/AnimationFbx/Bicep Curl.fbx"
+dest_files=["res://.godot/imported/Bicep Curl.fbx-4f45d67ea2dd112d7a9b470779389e32.res"]
 
 [params]
 

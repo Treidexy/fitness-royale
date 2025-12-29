@@ -1,15 +1,15 @@
 [remap]
 
-importer="scene"
+importer="animation_library"
 importer_version=1
-type="PackedScene"
-uid="uid://crc2mdcdj8myu"
-path="res://.godot/imported/characterMedium.fbx-9c1ca55c11db4a23553c76397af6db6b.scn"
+type="AnimationLibrary"
+uid="uid://dvta3kbomykxp"
+path="res://.godot/imported/Falling To Landing.fbx-ec1db8bb77296bb39184d032fdc70748.res"
 
 [deps]
 
-source_file="res://player-model/Model/characterMedium.fbx"
-dest_files=["res://.godot/imported/characterMedium.fbx-9c1ca55c11db4a23553c76397af6db6b.scn"]
+source_file="res://player-model/AnimationFbx/Falling To Landing.fbx"
+dest_files=["res://.godot/imported/Falling To Landing.fbx-ec1db8bb77296bb39184d032fdc70748.res"]
 
 [params]
 
