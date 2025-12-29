@@ -1,10 +1,7 @@
+# ProtoController v1.0 by Brackeys
 # Edited by Treidex
 
-# ProtoController v1.0 by Brackeys
-# CC0 License
-# Intended for rapid prototyping of first-person games.
-# Happy prototyping!
-
+class_name Player
 extends CharacterBody3D
 
 ## Can we move around?
@@ -14,13 +11,13 @@ extends CharacterBody3D
 ## Can we press to jump?
 @export var can_jump : bool = true
 ## Can we hold to run?
-@export var can_sprint : bool = false
+@export var can_sprint : bool = true
 ## Can we press to enter freefly mode (noclip)?
 @export var can_freefly : bool = false
 
 @export_group("Speeds")
 ## Look around rotation speed.
-@export var look_speed : float = 0.002
+@export var look_speed : float = 0.005
 ## Normal speed.
 @export var base_speed : float = 5.0
 ## Speed of jump.
@@ -29,22 +26,6 @@ extends CharacterBody3D
 @export var sprint_speed : float = 10.0
 ## How fast do we freefly?
 @export var freefly_speed : float = 25.0
-
-@export_group("Input Actions")
-## Name of Input Action to move Left.
-@export var input_left : String = "ui_left"
-## Name of Input Action to move Right.
-@export var input_right : String = "ui_right"
-## Name of Input Action to move Forward.
-@export var input_forward : String = "ui_up"
-## Name of Input Action to move Backward.
-@export var input_back : String = "ui_down"
-## Name of Input Action to Jump.
-@export var input_jump : String = "ui_accept"
-## Name of Input Action to Sprint.
-@export var input_sprint : String = "sprint"
-## Name of Input Action to toggle freefly mode.
-@export var input_freefly : String = "freefly"
 
 var mouse_captured : bool = false
 var look_rotation : Vector2
@@ -57,7 +38,6 @@ var freeflying : bool = false
 @onready var animation: AnimationPlayer = $characterMedium/AnimationPlayer
 
 func _ready() -> void:
-	check_input_mappings()
 	look_rotation.y = rotation.y
 	look_rotation.x = head.rotation.x
 
@@ -73,7 +53,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		rotate_look(event.relative)
 	
 	# Toggle freefly mode
-	if can_freefly and Input.is_action_just_pressed(input_freefly):
+	if can_freefly and Input.is_action_just_pressed("freefly"):
 		if not freeflying:
 			enable_freefly()
 		else:
@@ -82,7 +62,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func _physics_process(delta: float) -> void:
 	# If freeflying, handle freefly and nothing else
 	if can_freefly and freeflying:
-		var input_dir := Input.get_vector(input_left, input_right, input_forward, input_back)
+		var input_dir := Input.get_vector("left", "right", "forward", "backward")
 		var motion := (head.global_basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 		motion *= freefly_speed * delta
 		move_and_collide(motion)
@@ -98,12 +78,12 @@ func _physics_process(delta: float) -> void:
 
 	# Apply jumping
 	if can_jump:
-		if Input.is_action_just_pressed(input_jump) and is_on_floor():
+		if Input.is_action_just_pressed("jump") and is_on_floor():
 			velocity.y = jump_velocity
 
 	# Modify speed based on sprinting
 	var sprinting: bool;
-	if can_sprint and Input.is_action_pressed(input_sprint):
+	if can_sprint and Input.is_action_pressed("sprint"):
 		move_speed = sprint_speed
 		sprinting = true;
 	else:
@@ -112,7 +92,7 @@ func _physics_process(delta: float) -> void:
 
 	# Apply desired movement to velocity
 	if can_move:
-		var input_dir := Input.get_vector(input_left, input_right, input_forward, input_back)
+		var input_dir := Input.get_vector("left", "right", "forward", "backward")
 		var move_dir := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 		if move_dir:
 			velocity.x = move_dir.x * move_speed
@@ -143,13 +123,14 @@ func _physics_process(delta: float) -> void:
 ## Modifies look_rotation based on rot_input, then resets basis and rotates by look_rotation.
 func rotate_look(rot_input : Vector2):
 	look_rotation.x -= rot_input.y * look_speed
-	look_rotation.x = clamp(look_rotation.x, deg_to_rad(-85), deg_to_rad(85))
+	look_rotation.x = clamp(look_rotation.x, deg_to_rad(-40), deg_to_rad(65))
 	look_rotation.y -= rot_input.x * look_speed
-	transform.basis = Basis()
-	rotate_y(look_rotation.y)
-	head.transform.basis = Basis()
-	head.rotate_x(look_rotation.x)
-
+	#transform.basis = Basis()
+	if is_on_floor():
+		global_rotation.y = look_rotation.y;
+	#head.transform.basis = Basis()
+	head.global_rotation.x = look_rotation.x;
+	head.global_rotation.y = look_rotation.y;
 
 func enable_freefly():
 	collider.disabled = true
@@ -170,28 +151,14 @@ func release_mouse():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	mouse_captured = false
 
+func _on_enemy_detected(body: Node3D) -> void:
+	print(body);
+	if body is Enemy:
+		tackle(body);
 
-## Checks if some Input Actions haven't been created.
-## Disables functionality accordingly.
-func check_input_mappings():
-	if can_move and not InputMap.has_action(input_left):
-		push_error("Movement disabled. No InputAction found for input_left: " + input_left)
-		can_move = false
-	if can_move and not InputMap.has_action(input_right):
-		push_error("Movement disabled. No InputAction found for input_right: " + input_right)
-		can_move = false
-	if can_move and not InputMap.has_action(input_forward):
-		push_error("Movement disabled. No InputAction found for input_forward: " + input_forward)
-		can_move = false
-	if can_move and not InputMap.has_action(input_back):
-		push_error("Movement disabled. No InputAction found for input_back: " + input_back)
-		can_move = false
-	if can_jump and not InputMap.has_action(input_jump):
-		push_error("Jumping disabled. No InputAction found for input_jump: " + input_jump)
-		can_jump = false
-	if can_sprint and not InputMap.has_action(input_sprint):
-		push_error("Sprinting disabled. No InputAction found for input_sprint: " + input_sprint)
-		can_sprint = false
-	if can_freefly and not InputMap.has_action(input_freefly):
-		push_error("Freefly disabled. No InputAction found for input_freefly: " + input_freefly)
-		can_freefly = false
+func tackle(body: Enemy) -> void:
+	body.can_move = false;
+	body.can_jump = false;
+	body.has_gravity = false;
+	
+	

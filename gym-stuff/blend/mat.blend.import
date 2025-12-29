@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://c6bv5hl7duxpl"
-path="res://.godot/imported/bench.blend-cd5c22a24a6445dfccf2c63f10c10d7f.scn"
+uid="uid://rejvqq4kyfhj"
+path="res://.godot/imported/mat.blend-bb3d67771e43232cea4cc4512d193856.scn"
 
 [deps]
 
-source_file="res://gym-stuff/bench.blend"
-dest_files=["res://.godot/imported/bench.blend-cd5c22a24a6445dfccf2c63f10c10d7f.scn"]
+source_file="res://gym-stuff/blend/mat.blend"
+dest_files=["res://.godot/imported/mat.blend-bb3d67771e43232cea4cc4512d193856.scn"]
 
 [params]
 
@@ -32,14 +32,7 @@ animation/trimming=false
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
-_subresources={
-"nodes": {
-"PATH:Cube_003": {
-"generate/physics": true,
-"physics/shape_type": 1
-}
-}
-}
+_subresources={}
 blender/nodes/visible=0
 blender/nodes/active_collection_only=false
 blender/nodes/punctual_lights=true

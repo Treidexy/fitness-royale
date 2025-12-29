@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bcwp0fr0bupow"
-path="res://.godot/imported/dummy.blend-c5f18d2ca2d3eb8428d6f2aeb6ccb9f8.scn"
+uid="uid://6cwy8iennl6d"
+path="res://.godot/imported/plz.blend-a4b1497e2effebd938dca5dad15f9f3c.scn"
 
 [deps]
 
-source_file="res://gym-stuff/dummy.blend"
-dest_files=["res://.godot/imported/dummy.blend-c5f18d2ca2d3eb8428d6f2aeb6ccb9f8.scn"]
+source_file="res://plz.blend"
+dest_files=["res://.godot/imported/plz.blend-a4b1497e2effebd938dca5dad15f9f3c.scn"]
 
 [params]
 
@@ -32,13 +32,7 @@ animation/trimming=false
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
-_subresources={
-"nodes": {
-"PATH:Cylinder_030": {
-"generate/physics": true
-}
-}
-}
+_subresources={}
 blender/nodes/visible=0
 blender/nodes/active_collection_only=false
 blender/nodes/punctual_lights=true

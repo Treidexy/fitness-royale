@@ -6,10 +6,12 @@
 [ext_resource type="AnimationLibrary" uid="uid://bgccjgjesalpu" path="res://player-model/Animations/jump.fbx" id="3_ulb22"]
 [ext_resource type="AnimationLibrary" uid="uid://drpf00sq18ru8" path="res://player-model/Animations/run.fbx" id="4_1e552"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yvcfn"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_b7koy"]
 height = 3.6
 
 [node name="Enemy" type="CharacterBody3D"]
+collision_layer = 8
+collision_mask = 15
 script = ExtResource("1_yvcfn")
 
 [node name="characterMedium" parent="." instance=ExtResource("1_b7koy")]
@@ -21,7 +23,8 @@ libraries = {
 &"jump": ExtResource("3_ulb22"),
 &"run": ExtResource("4_1e552")
 }
+autoplay = "idle/Root|Idle"
 
 [node name="Collider" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
-shape = SubResource("CapsuleShape3D_yvcfn")
+shape = SubResource("CapsuleShape3D_b7koy")

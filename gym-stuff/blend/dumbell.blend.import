@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bvp8gawporgjy"
-path="res://.godot/imported/chair.blend-aa129815acec760d88603a8459a49e40.scn"
+uid="uid://bvc324i23meoj"
+path="res://.godot/imported/dumbell.blend-c382d3264839d174dfe492247974845b.scn"
 
 [deps]
 
-source_file="res://gym-stuff/chair.blend"
-dest_files=["res://.godot/imported/chair.blend-aa129815acec760d88603a8459a49e40.scn"]
+source_file="res://gym-stuff/blend/dumbell.blend"
+dest_files=["res://.godot/imported/dumbell.blend-c382d3264839d174dfe492247974845b.scn"]
 
 [params]
 
@@ -34,8 +34,12 @@ animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={
 "nodes": {
-"PATH:Cube_007": {
-"generate/physics": true
+"PATH:Cylinder_001": {
+"generate/physics": true,
+"physics/body_type": 1,
+"physics/layer": 2,
+"physics/mask": 15,
+"physics/shape_type": 1
 }
 }
 }

@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://rejvqq4kyfhj"
-path="res://.godot/imported/mat.blend-94ecdce9a46e86b3f10dd1dffc9904e1.scn"
+uid="uid://bvp8gawporgjy"
+path="res://.godot/imported/chair.blend-d4279d446428364879b03aa5f4a2b96e.scn"
 
 [deps]
 
-source_file="res://gym-stuff/mat.blend"
-dest_files=["res://.godot/imported/mat.blend-94ecdce9a46e86b3f10dd1dffc9904e1.scn"]
+source_file="res://gym-stuff/blend/chair.blend"
+dest_files=["res://.godot/imported/chair.blend-d4279d446428364879b03aa5f4a2b96e.scn"]
 
 [params]
 
@@ -32,7 +32,16 @@ animation/trimming=false
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
-_subresources={}
+_subresources={
+"nodes": {
+"PATH:Cube_007": {
+"generate/physics": true,
+"physics/body_type": 1,
+"physics/layer": 2,
+"physics/mask": 15
+}
+}
+}
 blender/nodes/visible=0
 blender/nodes/active_collection_only=false
 blender/nodes/punctual_lights=true

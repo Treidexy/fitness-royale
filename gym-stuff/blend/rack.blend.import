@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bvc324i23meoj"
-path="res://.godot/imported/dumbell.blend-f99624f4593a9bf20743110319a02ffe.scn"
+uid="uid://8c54nwtytc6m"
+path="res://.godot/imported/rack.blend-aaa030ee080f3a02df287a5223fbd817.scn"
 
 [deps]
 
-source_file="res://gym-stuff/dumbell.blend"
-dest_files=["res://.godot/imported/dumbell.blend-f99624f4593a9bf20743110319a02ffe.scn"]
+source_file="res://gym-stuff/blend/rack.blend"
+dest_files=["res://.godot/imported/rack.blend-aaa030ee080f3a02df287a5223fbd817.scn"]
 
 [params]
 
@@ -34,9 +34,11 @@ animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={
 "nodes": {
-"PATH:Cylinder_001": {
+"PATH:Cube_001": {
 "generate/physics": true,
 "physics/body_type": 1,
+"physics/layer": 2,
+"physics/mask": 15,
 "physics/shape_type": 1
 }
 }

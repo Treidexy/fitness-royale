@@ -6,17 +6,17 @@
 [ext_resource type="AnimationLibrary" uid="uid://bgccjgjesalpu" path="res://player-model/Animations/jump.fbx" id="4_0rk7u"]
 [ext_resource type="AnimationLibrary" uid="uid://drpf00sq18ru8" path="res://player-model/Animations/run.fbx" id="5_h60nn"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iof21"]
-albedo_color = Color(0.91806, 0.575202, 0.222449, 1)
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_ucva2"]
-radius = 0.4
-height = 1.8
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_s4jxa"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s4jxa"]
 height = 3.6
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_s4jxa"]
+radius = 2.0
+
 [node name="Player" type="CharacterBody3D"]
+collision_layer = 4
+collision_mask = 11
 script = ExtResource("1_ucva2")
 
 [node name="characterMedium" parent="." instance=ExtResource("2_wr06p")]
@@ -24,25 +24,29 @@ transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="characterMedium"]
 libraries = {
+&"custom": SubResource("AnimationLibrary_s4jxa"),
 &"idle": ExtResource("3_5hfox"),
 &"jump": ExtResource("4_0rk7u"),
 &"run": ExtResource("5_h60nn")
 }
 autoplay = "idle/Root|Idle"
 
-[node name="Mesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
-visible = false
-material_override = SubResource("StandardMaterial3D_iof21")
-cast_shadow = 0
-mesh = SubResource("CapsuleMesh_ucva2")
-
 [node name="Collider" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
 shape = SubResource("CapsuleShape3D_s4jxa")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 4
+collision_mask = 10
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, -0.5)
+shape = SubResource("SphereShape3D_s4jxa")
 
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Head"]
-transform = Transform3D(1, 0, 0, 0, 0.911044, 0.412309, 0, -0.412309, 0.911044, 0, 1.17086, 1.99623)
+transform = Transform3D(1, 0, 0, 0, 0.911044, 0.412309, 0, -0.412309, 0.911044, 0, 3.59986, 3.36432)
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_enemy_detected"]
