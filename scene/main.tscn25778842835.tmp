@@ -22,6 +22,11 @@ use_collision = true
 size = Vector3(50, 2, 50)
 
 [node name="Player" parent="." instance=ExtResource("1_wp4xf")]
+look_speed = null
+base_speed = null
+jump_velocity = null
+sprint_speed = null
+freefly_speed = null
 
 [node name="bench" parent="." instance=ExtResource("2_brvut")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -4)

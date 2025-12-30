@@ -3,13 +3,13 @@
 importer="animation_library"
 importer_version=1
 type="AnimationLibrary"
-uid="uid://evkn1n7pijsn"
-path="res://.godot/imported/Happy Idle.fbx-832aa7f1e346874ddceca4eeebe0748a.res"
+uid="uid://tvm7npo3ouk3"
+path="res://.godot/imported/Left Strafe Walking.fbx-6b8d72e0cdaafc7d93e105d937f8563b.res"
 
 [deps]
 
-source_file="res://player-model/AnimationFbx/Happy Idle.fbx"
-dest_files=["res://.godot/imported/Happy Idle.fbx-832aa7f1e346874ddceca4eeebe0748a.res"]
+source_file="res://player-model/AnimationFbx/Left Strafe Walking.fbx"
+dest_files=["res://.godot/imported/Left Strafe Walking.fbx-6b8d72e0cdaafc7d93e105d937f8563b.res"]
 
 [params]
 
@@ -38,7 +38,7 @@ _subresources={
 "save_to_file/enabled": false,
 "save_to_file/keep_custom_tracks": "",
 "save_to_file/path": "",
-"settings/loop_mode": 0,
+"settings/loop_mode": 1,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,
 "slice_1/name": "",

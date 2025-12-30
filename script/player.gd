@@ -31,8 +31,9 @@ var is_freeflying : bool = false
 ## IMPORTANT REFERENCES
 @onready var head: Node3D = $Head
 @onready var collider: CollisionShape3D = $Collider
-@onready var animation: AnimationPlayer = $characterMedium/AnimationPlayer
-@onready var playback: AnimationNodeStateMachinePlayback = $AnimationTree.get("parameters/playback");
+#@onready var animation: AnimationPlayer = $characterMedium/AnimationPlayer
+@onready var anim_tree: AnimationTree = $AnimationTree;
+@onready var playback: AnimationNodeStateMachinePlayback = anim_tree.get("parameters/playback");
 
 func _ready() -> void:
 	look_rotation.y = rotation.y
@@ -47,7 +48,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	# Look around
 	if mouse_captured and event is InputEventMouseMotion:
-		rotate_look(event.relative)
+		var rot_input = event.relative;
+		look_rotation.x -= rot_input.y * look_speed
+		look_rotation.y -= rot_input.x * look_speed
 	
 	# Toggle freefly mode
 	if Input.is_action_just_pressed("freefly"):
@@ -57,65 +60,66 @@ func _unhandled_input(event: InputEvent) -> void:
 			disable_freefly()
 
 func _physics_process(delta: float) -> void:
-	if Input.is_action_just_pressed("dance"):
-		print('he')
-		playback.travel("Dance");
-	
 	# If freeflying, handle freefly and nothing else
 	if is_freeflying:
 		var input_dir := Input.get_vector("left", "right", "forward", "backward")
 		var motion := (head.global_basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 		motion *= freefly_speed * delta
 		move_and_collide(motion)
-		return
+		rotate_look();
+		return;
+	
+	var want_playback := "Idle";
 	
 	# Apply gravity to velocity
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-		playback.travel("Air");
-		move_and_slide();
-		return;
-
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		if playback.get_current_node() == "Run" and not playback.get_fading_from_node():
-			velocity.y = jump_velocity
-
+		want_playback = "Air";
+	else:
+		velocity.x = move_toward(velocity.x, 0, move_speed)
+		velocity.z = move_toward(velocity.z, 0, move_speed)
+		var move_dir := Vector3.ZERO;
+		if can_move():
+			is_sprinting = Input.is_action_pressed("sprint");
+			var input = Input.get_vector("left", "right", "forward", "backward");
+			move_dir = (transform.basis * Vector3(input.x, 0, input.y)).normalized()
+			anim_tree.set("parameters/Walk/blend_position", input);
+		if move_dir:
+			velocity.x = move_dir.x * move_speed
+			velocity.z = move_dir.z * move_speed
+			if is_sprinting:
+				want_playback = "Run";
+			else:
+				want_playback = "Walk";
+		
+		if Input.is_action_just_pressed("jump"):
+			if playback.get_current_node() == "Run" and not playback.get_fading_from_node():
+				velocity.y = jump_velocity
+			else:
+				want_playback = "Jump";
 	
-	if Input.is_action_pressed("sprint"):
-		move_speed = sprint_speed
-		is_sprinting = true;
-	else:
-		move_speed = base_speed
-		is_sprinting = false;
-
-	# Apply desired movement to velocity
-	velocity.x = move_toward(velocity.x, 0, move_speed)
-	velocity.z = move_toward(velocity.z, 0, move_speed)
-	var move_dir := (transform.basis * Vector3.FORWARD * Input.get_action_strength("forward")).normalized()
-	if move_dir:
-		velocity.x = move_dir.x * move_speed
-		velocity.z = move_dir.z * move_speed
-		if is_sprinting:
-			playback.travel("Run");
-		else:
-			playback.travel("Walk");
-	else:
-		playback.travel("Idle");
+	if Input.is_action_just_pressed("lift"):
+		want_playback = "DeadLift";
+	
+	if Input.is_action_just_pressed("dance"):
+		want_playback = "Dance";
 	
 	# Use velocity to actually move
-	move_and_slide()
-	rotate_look(Vector2.ZERO);
+	playback.travel(want_playback);
+	move_and_slide();
+	rotate_look();
 
+
+func can_move() -> bool:
+	return is_on_floor() and ["Idle", "Walk", "Run"].has(playback.get_current_node());
 
 ## Rotate us to look around.
 ## Base of controller rotates around y (left/right). Head rotates around x (up/down).
 ## Modifies look_rotation based on rot_input, then resets basis and rotates by look_rotation.
-func rotate_look(rot_input : Vector2):
-	look_rotation.x -= rot_input.y * look_speed
-	look_rotation.x = clamp(look_rotation.x, deg_to_rad(-40), deg_to_rad(65))
-	look_rotation.y -= rot_input.x * look_speed
+func rotate_look():
 	#transform.basis = Basis()
-	if is_on_floor():
+	look_rotation.x = clamp(look_rotation.x, deg_to_rad(-40), deg_to_rad(65))
+	if can_move():
 		global_rotation.y = look_rotation.y;
 	#head.transform.basis = Basis()
 	head.global_rotation.x = look_rotation.x;

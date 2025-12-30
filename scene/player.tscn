@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://bs72ogkvdd7d6"]
+[gd_scene load_steps=35 format=3 uid="uid://bs72ogkvdd7d6"]
 
 [ext_resource type="Script" uid="uid://bk7qfbf4uo8c0" path="res://script/player.gd" id="1_ucva2"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://dempv7rrljlhu" path="res://player-model/AnimationTree/player.tres" id="2_4reak"]
@@ -8,21 +8,29 @@
 [ext_resource type="AnimationLibrary" uid="uid://ccqqgqw0apfv0" path="res://player-model/AnimationFbx/Bicycle Crunch.fbx" id="5_wt23p"]
 [ext_resource type="AnimationLibrary" uid="uid://s3easdxesby2" path="res://player-model/AnimationFbx/Breathing Idle.fbx" id="6_k8m7u"]
 [ext_resource type="AnimationLibrary" uid="uid://cleyv1phq5v44" path="res://player-model/AnimationFbx/Drunk Run Forward.fbx" id="7_qucqc"]
+[ext_resource type="AnimationLibrary" uid="uid://cmk3nsu2k7fif" path="res://player-model/AnimationFbx/Deadlift Up.fbx" id="8_3vgh4"]
 [ext_resource type="AnimationLibrary" uid="uid://da8hid8igsjhq" path="res://player-model/AnimationFbx/Falling Idle.fbx" id="8_xsw3c"]
 [ext_resource type="AnimationLibrary" uid="uid://dvta3kbomykxp" path="res://player-model/AnimationFbx/Falling To Landing.fbx" id="9_l1uwf"]
+[ext_resource type="AnimationLibrary" uid="uid://cs83asirayls2" path="res://player-model/AnimationFbx/Fall Flat.fbx" id="9_pk8el"]
 [ext_resource type="AnimationLibrary" uid="uid://br6yh85a6avlp" path="res://player-model/AnimationFbx/Fast Run.fbx" id="10_8ie14"]
 [ext_resource type="AnimationLibrary" uid="uid://4hkwy45ko8l5" path="res://player-model/AnimationFbx/Getting Up.fbx" id="11_pk8el"]
 [ext_resource type="AnimationLibrary" uid="uid://evkn1n7pijsn" path="res://player-model/AnimationFbx/Happy Idle.fbx" id="12_3vgh4"]
+[ext_resource type="AnimationLibrary" uid="uid://dkgacwnnw8etc" path="res://player-model/AnimationFbx/Getting Thrown.fbx" id="13_3vgh4"]
 [ext_resource type="AnimationLibrary" uid="uid://c2pkxms1hfch0" path="res://player-model/AnimationFbx/Idle To Push Up.fbx" id="13_h3knh"]
 [ext_resource type="AnimationLibrary" uid="uid://duohdvtj3ds7f" path="res://player-model/AnimationFbx/Jumping Up.fbx" id="14_n3008"]
 [ext_resource type="AnimationLibrary" uid="uid://5r0m4iewpg8r" path="res://player-model/AnimationFbx/Kettlebell Swing.fbx" id="15_wpsxb"]
 [ext_resource type="AnimationLibrary" uid="uid://bla34witasw0s" path="res://player-model/AnimationFbx/Overhead Squat.fbx" id="16_rt08c"]
 [ext_resource type="AnimationLibrary" uid="uid://e7p8a20y10kc" path="res://player-model/AnimationFbx/Sad Idle.fbx" id="17_6vs06"]
+[ext_resource type="AnimationLibrary" uid="uid://dn4ngr2u0ruhd" path="res://player-model/AnimationFbx/Jumping.fbx" id="17_h3knh"]
+[ext_resource type="AnimationLibrary" uid="uid://tvm7npo3ouk3" path="res://player-model/AnimationFbx/Left Strafe Walking.fbx" id="17_k8m7u"]
 [ext_resource type="AnimationLibrary" uid="uid://cd5pp0b20h7f0" path="res://player-model/AnimationFbx/Shoulder Throw, Aggressor.fbx" id="18_4uieu"]
 [ext_resource type="AnimationLibrary" uid="uid://xykvudtshf6x" path="res://player-model/AnimationFbx/Shoulder Throw, Victim.fbx" id="19_5wapc"]
+[ext_resource type="AnimationLibrary" uid="uid://cfkpakmtsjc8a" path="res://player-model/AnimationFbx/Right Strafe Walking.fbx" id="19_qucqc"]
+[ext_resource type="AnimationLibrary" uid="uid://biakytuvs08lk" path="res://player-model/AnimationFbx/Left Strafe.fbx" id="20_n3008"]
 [ext_resource type="AnimationLibrary" uid="uid://bnpu87towm7xf" path="res://player-model/AnimationFbx/Start Bicycle Sit Up.fbx" id="20_xj5ck"]
 [ext_resource type="AnimationLibrary" uid="uid://dohr1nk1klyia" path="res://player-model/AnimationFbx/Swing Dancing.fbx" id="21_6lu7o"]
 [ext_resource type="AnimationLibrary" uid="uid://cpv4x47nql40" path="res://player-model/AnimationFbx/Walking.fbx" id="22_8rkx0"]
+[ext_resource type="AnimationLibrary" uid="uid://clmwnddud5d3q" path="res://player-model/AnimationFbx/Right Strafe.fbx" id="23_wpsxb"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s4jxa"]
 height = 3.6
@@ -43,6 +51,7 @@ script = ExtResource("1_ucva2")
 root_node = NodePath("../characterMedium")
 tree_root = ExtResource("2_4reak")
 anim_player = NodePath("../characterMedium/AnimationPlayer")
+parameters/Walk/blend_position = Vector2(-1.00478, 0.0044843)
 
 [node name="characterMedium" parent="." instance=ExtResource("2_wr06p")]
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 0.125)
@@ -53,16 +62,24 @@ libraries = {
 &"Bicep Curl": ExtResource("4_4reak"),
 &"Bicycle Crunch": ExtResource("5_wt23p"),
 &"Breathing Idle": ExtResource("6_k8m7u"),
+&"Deadlift Up": ExtResource("8_3vgh4"),
 &"Drunk Run Forward": ExtResource("7_qucqc"),
+&"Fall Flat": ExtResource("9_pk8el"),
 &"Falling Idle": ExtResource("8_xsw3c"),
 &"Falling To Landing": ExtResource("9_l1uwf"),
 &"Fast Run": ExtResource("10_8ie14"),
+&"Getting Thrown": ExtResource("13_3vgh4"),
 &"Getting Up": ExtResource("11_pk8el"),
 &"Happy Idle": ExtResource("12_3vgh4"),
 &"Idle To Push Up": ExtResource("13_h3knh"),
+&"Jumping": ExtResource("17_h3knh"),
 &"Jumping Up": ExtResource("14_n3008"),
 &"Kettlebell Swing": ExtResource("15_wpsxb"),
+&"Left Strafe": ExtResource("20_n3008"),
+&"Left Strafe Walking": ExtResource("17_k8m7u"),
 &"Overhead Squat": ExtResource("16_rt08c"),
+&"Right Strafe": ExtResource("23_wpsxb"),
+&"Right Strafe Walking": ExtResource("19_qucqc"),
 &"Sad Idle": ExtResource("17_6vs06"),
 &"Shoulder Throw_ Aggressor": ExtResource("18_4uieu"),
 &"Shoulder Throw_ Victim": ExtResource("19_5wapc"),
@@ -97,5 +114,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 [node name="Camera3D" type="Camera3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 0.911044, 0.412309, 0, -0.412309, 0.911044, 0, 3.59986, 3.36432)
 
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = 6.0
+offset_top = 3.0
+offset_right = 98.0
+offset_bottom = 27.0
+text = "100%"
+
+[connection signal="animation_finished" from="AnimationTree" to="." method="_on_animation_tree_animation_finished"]
 [connection signal="body_entered" from="Clumsy" to="." method="_on_clumsy_body_entered"]
 [connection signal="body_entered" from="Reach" to="." method="_on_enemy_detected"]
