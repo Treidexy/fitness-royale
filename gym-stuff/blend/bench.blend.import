@@ -33,6 +33,22 @@ animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={
+"materials": {
+"Material.003": {
+"use_external/enabled": true,
+"use_external/path": ""
+}
+},
+"meshes": {
+"bench_Cube_010": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://bec.res"
+}
+},
 "nodes": {
 "PATH:Cube_003": {
 "generate/physics": true,

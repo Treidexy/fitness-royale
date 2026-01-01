@@ -1,27 +1,36 @@
-[gd_scene load_steps=24 format=3 uid="uid://ctel7t5vxrtl2"]
+[gd_scene load_steps=33 format=3 uid="uid://ctel7t5vxrtl2"]
 
 [ext_resource type="PackedScene" uid="uid://crc2mdcdj8myu" path="res://player-model/Model/characterMedium.fbx" id="1_b7koy"]
 [ext_resource type="Script" uid="uid://bkwynsj4nd4rc" path="res://script/enemy.gd" id="1_yvcfn"]
+[ext_resource type="AnimationNodeStateMachine" uid="uid://dempv7rrljlhu" path="res://player-model/AnimationTree/player.tres" id="2_ou8pc"]
 [ext_resource type="AnimationLibrary" uid="uid://kj25e1vl4k85" path="res://player-model/AnimationFbx/Back Squat.fbx" id="3_1i3en"]
 [ext_resource type="AnimationLibrary" uid="uid://bounoy7qmj4hf" path="res://player-model/AnimationFbx/Bicep Curl.fbx" id="4_x1et1"]
 [ext_resource type="AnimationLibrary" uid="uid://ccqqgqw0apfv0" path="res://player-model/AnimationFbx/Bicycle Crunch.fbx" id="5_ljf0q"]
 [ext_resource type="AnimationLibrary" uid="uid://s3easdxesby2" path="res://player-model/AnimationFbx/Breathing Idle.fbx" id="6_ke1q5"]
 [ext_resource type="AnimationLibrary" uid="uid://cleyv1phq5v44" path="res://player-model/AnimationFbx/Drunk Run Forward.fbx" id="7_eomt6"]
+[ext_resource type="AnimationLibrary" uid="uid://cmk3nsu2k7fif" path="res://player-model/AnimationFbx/Deadlift Up.fbx" id="8_5katb"]
 [ext_resource type="AnimationLibrary" uid="uid://da8hid8igsjhq" path="res://player-model/AnimationFbx/Falling Idle.fbx" id="8_n7w8d"]
 [ext_resource type="AnimationLibrary" uid="uid://dvta3kbomykxp" path="res://player-model/AnimationFbx/Falling To Landing.fbx" id="9_vibp8"]
 [ext_resource type="AnimationLibrary" uid="uid://br6yh85a6avlp" path="res://player-model/AnimationFbx/Fast Run.fbx" id="10_32dru"]
+[ext_resource type="AnimationLibrary" uid="uid://cs83asirayls2" path="res://player-model/AnimationFbx/Fall Flat.fbx" id="10_cxd3g"]
 [ext_resource type="AnimationLibrary" uid="uid://4hkwy45ko8l5" path="res://player-model/AnimationFbx/Getting Up.fbx" id="11_wjnyi"]
 [ext_resource type="AnimationLibrary" uid="uid://evkn1n7pijsn" path="res://player-model/AnimationFbx/Happy Idle.fbx" id="12_ou8pc"]
 [ext_resource type="AnimationLibrary" uid="uid://c2pkxms1hfch0" path="res://player-model/AnimationFbx/Idle To Push Up.fbx" id="13_5katb"]
 [ext_resource type="AnimationLibrary" uid="uid://duohdvtj3ds7f" path="res://player-model/AnimationFbx/Jumping Up.fbx" id="14_cxd3g"]
+[ext_resource type="AnimationLibrary" uid="uid://dkgacwnnw8etc" path="res://player-model/AnimationFbx/Getting Thrown.fbx" id="14_ith06"]
 [ext_resource type="AnimationLibrary" uid="uid://5r0m4iewpg8r" path="res://player-model/AnimationFbx/Kettlebell Swing.fbx" id="15_ith06"]
 [ext_resource type="AnimationLibrary" uid="uid://bla34witasw0s" path="res://player-model/AnimationFbx/Overhead Squat.fbx" id="16_7tkbx"]
 [ext_resource type="AnimationLibrary" uid="uid://e7p8a20y10kc" path="res://player-model/AnimationFbx/Sad Idle.fbx" id="17_et1dn"]
+[ext_resource type="AnimationLibrary" uid="uid://dn4ngr2u0ruhd" path="res://player-model/AnimationFbx/Jumping.fbx" id="18_7tkbx"]
 [ext_resource type="AnimationLibrary" uid="uid://cd5pp0b20h7f0" path="res://player-model/AnimationFbx/Shoulder Throw, Aggressor.fbx" id="18_oj75w"]
 [ext_resource type="AnimationLibrary" uid="uid://xykvudtshf6x" path="res://player-model/AnimationFbx/Shoulder Throw, Victim.fbx" id="19_kgj4v"]
 [ext_resource type="AnimationLibrary" uid="uid://bnpu87towm7xf" path="res://player-model/AnimationFbx/Start Bicycle Sit Up.fbx" id="20_mwjhy"]
+[ext_resource type="AnimationLibrary" uid="uid://biakytuvs08lk" path="res://player-model/AnimationFbx/Left Strafe.fbx" id="21_et1dn"]
 [ext_resource type="AnimationLibrary" uid="uid://dohr1nk1klyia" path="res://player-model/AnimationFbx/Swing Dancing.fbx" id="21_s0id3"]
 [ext_resource type="AnimationLibrary" uid="uid://cpv4x47nql40" path="res://player-model/AnimationFbx/Walking.fbx" id="22_ap0wm"]
+[ext_resource type="AnimationLibrary" uid="uid://tvm7npo3ouk3" path="res://player-model/AnimationFbx/Left Strafe Walking.fbx" id="22_oj75w"]
+[ext_resource type="AnimationLibrary" uid="uid://clmwnddud5d3q" path="res://player-model/AnimationFbx/Right Strafe.fbx" id="24_kgj4v"]
+[ext_resource type="AnimationLibrary" uid="uid://cfkpakmtsjc8a" path="res://player-model/AnimationFbx/Right Strafe Walking.fbx" id="25_mwjhy"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_b7koy"]
 height = 3.6
@@ -30,6 +39,13 @@ height = 3.6
 collision_layer = 8
 collision_mask = 15
 script = ExtResource("1_yvcfn")
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+root_node = NodePath("../characterMedium")
+tree_root = ExtResource("2_ou8pc")
+anim_player = NodePath("../characterMedium/AnimationPlayer")
+parameters/Run/blend_position = Vector2(0, 0)
+parameters/Walk/blend_position = Vector2(-1.00478, 0.0044843)
 
 [node name="characterMedium" parent="." instance=ExtResource("1_b7koy")]
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 0.125)
@@ -40,16 +56,24 @@ libraries = {
 &"Bicep Curl": ExtResource("4_x1et1"),
 &"Bicycle Crunch": ExtResource("5_ljf0q"),
 &"Breathing Idle": ExtResource("6_ke1q5"),
+&"Deadlift Up": ExtResource("8_5katb"),
 &"Drunk Run Forward": ExtResource("7_eomt6"),
+&"Fall Flat": ExtResource("10_cxd3g"),
 &"Falling Idle": ExtResource("8_n7w8d"),
 &"Falling To Landing": ExtResource("9_vibp8"),
 &"Fast Run": ExtResource("10_32dru"),
+&"Getting Thrown": ExtResource("14_ith06"),
 &"Getting Up": ExtResource("11_wjnyi"),
 &"Happy Idle": ExtResource("12_ou8pc"),
 &"Idle To Push Up": ExtResource("13_5katb"),
+&"Jumping": ExtResource("18_7tkbx"),
 &"Jumping Up": ExtResource("14_cxd3g"),
 &"Kettlebell Swing": ExtResource("15_ith06"),
+&"Left Strafe": ExtResource("21_et1dn"),
+&"Left Strafe Walking": ExtResource("22_oj75w"),
 &"Overhead Squat": ExtResource("16_7tkbx"),
+&"Right Strafe": ExtResource("24_kgj4v"),
+&"Right Strafe Walking": ExtResource("25_mwjhy"),
 &"Sad Idle": ExtResource("17_et1dn"),
 &"Shoulder Throw_ Aggressor": ExtResource("18_oj75w"),
 &"Shoulder Throw_ Victim": ExtResource("19_kgj4v"),

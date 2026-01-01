@@ -1,0 +1,38 @@
+[gd_scene load_steps=8 format=3 uid="uid://ci6qhmidpta3y"]
+
+[ext_resource type="Script" uid="uid://jh7iw0kjpsd3" path="res://script/game_context.gd" id="1_0ha60"]
+[ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://scene/player.tscn" id="1_wp4xf"]
+[ext_resource type="PackedScene" uid="uid://c6bv5hl7duxpl" path="res://gym-stuff/blend/bench.blend" id="2_brvut"]
+[ext_resource type="PackedScene" uid="uid://bcwp0fr0bupow" path="res://gym-stuff/blend/dummy.blend" id="3_0ha60"]
+[ext_resource type="PackedScene" uid="uid://8c54nwtytc6m" path="res://gym-stuff/blend/rack.blend" id="6_4j5ol"]
+[ext_resource type="PackedScene" uid="uid://cdq2soefekww1" path="res://gym-stuff/blend/bar.blend" id="6_p1hux"]
+[ext_resource type="Script" uid="uid://c24ys10wiil8x" path="res://script/bar.gd" id="7_p1hux"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="GameContext" type="Node" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("1_0ha60")
+player = NodePath("../Player")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.974441, -0.11993, -0.189953, 0.224645, 0.52022, 0.823957, 0, -0.845569, 0.533865, 0, 0, 0)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+use_collision = true
+size = Vector3(50, 2, 50)
+
+[node name="Player" parent="." instance=ExtResource("1_wp4xf")]
+
+[node name="bench" parent="." instance=ExtResource("2_brvut")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -4)
+
+[node name="dummy" parent="." instance=ExtResource("3_0ha60")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 4)
+
+[node name="rack" parent="." instance=ExtResource("6_4j5ol")]
+transform = Transform3D(-0.574834, 0, 0.81827, 0, 1, 0, -0.81827, 0, -0.574834, 4.20962, 0.00399268, 5.73564)
+
+[node name="bar" parent="." instance=ExtResource("6_p1hux")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.25798, 0.0750553, -0.126369)
+script = ExtResource("7_p1hux")

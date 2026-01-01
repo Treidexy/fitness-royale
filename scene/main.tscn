@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://ci6qhmidpta3y"]
+[gd_scene load_steps=9 format=3 uid="uid://ci6qhmidpta3y"]
 
 [ext_resource type="Script" uid="uid://jh7iw0kjpsd3" path="res://script/game_context.gd" id="1_0ha60"]
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://scene/player.tscn" id="1_wp4xf"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://bcwp0fr0bupow" path="res://gym-stuff/blend/dummy.blend" id="3_0ha60"]
 [ext_resource type="PackedScene" uid="uid://8c54nwtytc6m" path="res://gym-stuff/blend/rack.blend" id="6_4j5ol"]
 [ext_resource type="PackedScene" uid="uid://cdq2soefekww1" path="res://gym-stuff/blend/bar.blend" id="6_p1hux"]
+[ext_resource type="Script" uid="uid://c24ys10wiil8x" path="res://script/bar.gd" id="7_p1hux"]
+[ext_resource type="PackedScene" uid="uid://ctel7t5vxrtl2" path="res://scene/enemy.tscn" id="8_of57s"]
 
 [node name="Node3D" type="Node3D"]
 
@@ -34,3 +36,7 @@ transform = Transform3D(-0.574834, 0, 0.81827, 0, 1, 0, -0.81827, 0, -0.574834, 
 
 [node name="bar" parent="." instance=ExtResource("6_p1hux")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.25798, 0.0750553, -0.126369)
+script = ExtResource("7_p1hux")
+
+[node name="Enemy" parent="." instance=ExtResource("8_of57s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.28037, -4.76837e-07, 8.93948)

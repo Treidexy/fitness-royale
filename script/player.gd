@@ -84,6 +84,7 @@ func _physics_process(delta: float) -> void:
 			var input = Input.get_vector("left", "right", "forward", "backward");
 			move_dir = (transform.basis * Vector3(input.x, 0, input.y)).normalized()
 			anim_tree.set("parameters/Walk/blend_position", input);
+			anim_tree.set("parameters/Run/blend_position", input);
 		if move_dir:
 			velocity.x = move_dir.x * move_speed
 			velocity.z = move_dir.z * move_speed
@@ -150,9 +151,7 @@ func _on_enemy_detected(body: Node3D) -> void:
 		#tackle(body);
 
 func tackle(body: Enemy) -> void:
-	body.can_move = false;
-	body.can_jump = false;
-	body.has_gravity = false;
+	pass
 	
 func _on_clumsy_body_entered(body: Node3D) -> void:
 	if not is_sprinting:
@@ -169,4 +168,3 @@ func _on_clumsy_body_entered(body: Node3D) -> void:
 		body.apply_impulse((d * 5 + Vector3.UP * 0.5) * air_bonus);
 	if body is Enemy:
 		body.velocity += (d.normalized() * 15 + Vector3.UP * 5) * air_bonus;
-		body.can_move = false;

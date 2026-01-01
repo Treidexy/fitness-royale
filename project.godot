@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="fitness-royale"
-run/main_scene="uid://ci6qhmidpta3y"
+run/main_scene="uid://c1f68gynppm2p"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
 

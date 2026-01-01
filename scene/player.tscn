@@ -51,6 +51,7 @@ script = ExtResource("1_ucva2")
 root_node = NodePath("../characterMedium")
 tree_root = ExtResource("2_4reak")
 anim_player = NodePath("../characterMedium/AnimationPlayer")
+parameters/Run/blend_position = Vector2(0.527911, 0.0224216)
 parameters/Walk/blend_position = Vector2(-1.00478, 0.0044843)
 
 [node name="characterMedium" parent="." instance=ExtResource("2_wr06p")]
